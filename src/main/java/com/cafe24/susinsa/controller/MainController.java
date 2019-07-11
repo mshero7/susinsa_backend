@@ -11,10 +11,4 @@ public class MainController {
 	public String main() {
 		return "main/index";
 	}
-	
-	@ResponseBody
-	@RequestMapping("/hello")
-	public String hello() {
-		return "<h1>안녕하세요!</h1>";
-	}
 }
