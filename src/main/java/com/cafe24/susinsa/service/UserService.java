@@ -1,5 +1,7 @@
 package com.cafe24.susinsa.service;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,22 +13,18 @@ public class UserService {
 	
 	@Autowired
 	private UserDao userDao;
-	
-	public Boolean existEmail(String email) {
-		UserVo userVo = userDao.get(email);
-		return userVo != null;
-	}
+		
 	
 	public Boolean join(UserVo userVo) {
-		return userDao.insert(userVo);
+		return userDao.join(userVo);
 	}
 
-	public UserVo getUser(Long no) {
-		return userDao.get(no) ;
+	public Boolean existId(String id) {
+		return userDao.existId(id);
 	}
-	
-	
-	public boolean updateUser( UserVo userVo ) {
-		return userDao.update( userVo ) == 1;
+
+	public Boolean joinable(String name, String personalNumber) {
+		
+		return userDao.joinable(name, personalNumber);
 	}
 }
