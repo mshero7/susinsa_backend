@@ -4,8 +4,11 @@ import java.sql.Date;
 
 import javax.validation.constraints.Pattern;
 
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+
+import com.cafe24.susinsa.validator.constraints.ValidGender;
+import com.cafe24.susinsa.validator.constraints.ValidID;
+import com.cafe24.susinsa.validator.constraints.ValidPassword;
 
 /**
  * @author user
@@ -14,20 +17,26 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class UserVo {
 	private Long no;
 	@NotEmpty(message = "아이디는 필수 입니다.")
-	@Email(message = "이메일 형식으로 입력해주세요.")
-	@Pattern(regexp = "/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/", message="영어로만 작성해주세요.")
+	@ValidID
 	private String id;
 	
 	@NotEmpty(message = "패스워드는 필수입니다.")
-	@Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})",
-				message = "비밀 번호는 6~20자리로 숫자와 특수 문자가 포함된 영문 대소문자로 입력해 주세요")
+	@ValidPassword
 	private String password;
 	
 	@NotEmpty(message = "이름은 필수입니다.")
 	private String name;
+	
+	@ValidGender
 	private String gender;
+	
 	@NotEmpty(message = "주민번호는 필수입니다.")
 	private String personalNumber;
+
+	private String phone;
+	private String grade;
+	private int mileage;
+	private Date joinDate;
 	
 	public String getPersonalNumber() {
 		return personalNumber;
@@ -52,11 +61,6 @@ public class UserVo {
 		this.personalNumber = personalNumber;
 	}
 
-	private String phone;
-	private String grade;
-	private int mileage;
-	private Date joinDate;
-	
 	public UserVo() {
 	}
 	
