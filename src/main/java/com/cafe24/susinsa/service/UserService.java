@@ -24,7 +24,6 @@ public class UserService {
 	}
 
 	public Boolean joinable(String name, String personalNumber) {
-		
 		return userDao.joinable(name, personalNumber);
 	}
 }

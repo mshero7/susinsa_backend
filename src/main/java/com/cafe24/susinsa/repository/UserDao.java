@@ -21,22 +21,21 @@ public class UserDao {
 					"M","930831-1111111","010-2526-7336","Bronze",0, null));
 	
 	public Boolean join(UserVo vo) {
-		boolean result = vo == null ? true : false;
+		boolean result = vo != null ? true : false;
 		return result;
 	}
 
 	public Boolean existId(String id) {
 		String db_id = user_list.get(0).getId();
 		
-		return db_id.equals(id);
+		return !db_id.equals(id);
 	}
 
 	public Boolean joinable(String name, String personalNumber) {
+		// DB에서 가져왔다고 가정
 		UserVo db_user = user_list.get(0);
-		System.out.println(db_user.getName());
-		System.out.println(name);
-		System.out.println(db_user.getName().equals(name));
-		return db_user.getName().equals(name) && db_user.getPersonalNumber().equals(personalNumber);
+		// 이름과 주민번호가 일치하지 경우가 없을때만 true를 반환해 가입가능하다고 알려준다.
+		return !(db_user.getName().equals(name) && db_user.getPersonalNumber().equals(personalNumber));
 	}
 	
 }

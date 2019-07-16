@@ -1,6 +1,7 @@
 package com.cafe24.susinsa.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,7 +30,8 @@ public class UserController {
 	private UserService userService;
 	
 	// 1. 이미 가입한 고객인지 조사
-	@ApiOperation(value="이미 가입한 회원인지 조사")	
+	// 이름과 주민번호로 이미 가입한 고객인지 조회한다.
+	@ApiOperation(value="이름과 주민번호로 이미 가입한 고객인지 조회한다.")	
 	@RequestMapping(value="/check/Joinable", method=RequestMethod.GET)
 	public JSONResult checkJoinable(
 			@RequestParam (value="name", required=true, defaultValue="") String name,
@@ -55,10 +57,9 @@ public class UserController {
 	// 3. 회원가입
 	@ApiOperation(value="회원 가입")
 	@RequestMapping(value="/join", method=RequestMethod.POST)
-	public JSONResult join(
-			@RequestParam(value="user", required=true, defaultValue="") UserVo user) {
-		
-       return null;
+	public JSONResult join(	@RequestBody UserVo user) {
+		userService.join(user);
+       return JSONResult.success(user);
 	}
 	
 	// 4. 로그인 처리
@@ -95,8 +96,7 @@ public class UserController {
 	@ApiOperation(value="회원 탈퇴")
 	@RequestMapping(value="/withdrawal/{Id}", method=RequestMethod.DELETE)
 	public JSONResult withdrawal() {
-		JSONResult result = JSONResult.success(null);
-
+	   JSONResult result = JSONResult.success(null);
        return result;
 	}
 }

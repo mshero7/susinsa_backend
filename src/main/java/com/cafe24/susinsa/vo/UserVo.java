@@ -22,6 +22,7 @@ public class UserVo {
 	@Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})",
 				message = "비밀 번호는 6~20자리로 숫자와 특수 문자가 포함된 영문 대소문자로 입력해 주세요")
 	private String password;
+	
 	@NotEmpty(message = "이름은 필수입니다.")
 	private String name;
 	private String gender;
