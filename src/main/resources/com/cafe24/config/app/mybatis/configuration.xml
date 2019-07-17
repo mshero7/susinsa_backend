@@ -7,4 +7,5 @@
 	<mappers>
 		<mapper resource="com/cafe24/config/app/mybatis/mappers/user.xml" />
 	</mappers>
+	
 </configuration>
