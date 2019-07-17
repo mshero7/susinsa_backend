@@ -62,9 +62,16 @@ public class UserControllerTest {
 	// 가입하지 않은 이름과 주민번호로 테스트해보고 true가 나온다면 가입이 가능한것이다.
 	@Test
 	public void testJoinable() throws Exception {
-		ResultActions resultActions = mockMvc
-				.perform(get("/api/user/check/Joinable","문상수","930831-1111112").contentType(MediaType.APPLICATION_JSON));
+		ResultActions resultActions; 
 		
+		resultActions = mockMvc
+				.perform(get("/api/user/check/Joinable")
+				.param("name", "문상수1")
+				.param("phone", "010-2526-7336")
+				.param("enc_key", "aa")
+				.contentType(MediaType.APPLICATION_JSON));
+		
+		// 무조건 OK가 나고 데이터베이스에 갔다와야 알수있는거아닐까
 		resultActions.andExpect(status().isOk())
 		.andDo(print())
 		.andExpect(jsonPath("$.result", is("success")))
@@ -74,16 +81,16 @@ public class UserControllerTest {
 	// 2. 이미 가입된 아이디인지 조사
 	// 이미 다른 고객이 사용중인 아이디인지 조회한다.
 	// 가입하지 않은 아이디로 테스트 해보고 true가 나온다면 사용이 가능한것이다.
-	@Test
-	public void testUserCheckId() throws Exception {
-		ResultActions resultActions = mockMvc
-				.perform(get("/api/user/check/Id","test@naver.com").contentType(MediaType.APPLICATION_JSON));
-		
-		resultActions.andExpect(status().isOk())
-		.andDo(print())
-		.andExpect(jsonPath("$.result", is("success")))
-		.andExpect(jsonPath("$.data", is(true)));
-	}
+//	@Test
+//	public void testUserCheckId() throws Exception {
+//		ResultActions resultActions = mockMvc
+//				.perform(get("/api/user/check/Id","test@naver.com").contentType(MediaType.APPLICATION_JSON));
+//		
+//		resultActions.andExpect(status().isOk())
+//		.andDo(print())
+//		.andExpect(jsonPath("$.result", is("success")))
+//		.andExpect(jsonPath("$.data", is(true)));
+//	}
 	
 //	// 3. 회원가입
 //	@Test

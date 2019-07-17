@@ -19,56 +19,21 @@ public class UserVo {
 	@NotEmpty(message = "아이디는 필수 입니다.")
 	@ValidID
 	private String id;
-	
+
 	@NotEmpty(message = "패스워드는 필수입니다.")
 	@ValidPassword
 	private String password;
-	
+
 	@NotEmpty(message = "이름은 필수입니다.")
 	private String name;
-	
+
 	@ValidGender
 	private String gender;
-	
-	@NotEmpty(message = "주민번호는 필수입니다.")
-	private String personalNumber;
 
 	private String phone;
-	private String grade;
-	private int mileage;
 	private Date joinDate;
+	private String secret_key;
 	
-	public String getPersonalNumber() {
-		return personalNumber;
-	}
-
-	public UserVo(Long no, String id, String password, String name, String gender, String personalNumber, String phone,
-			String grade, int mileage, Date joinDate) {
-		super();
-		this.no = no;
-		this.id = id;
-		this.password = password;
-		this.name = name;
-		this.gender = gender;
-		this.personalNumber = personalNumber;
-		this.phone = phone;
-		this.grade = grade;
-		this.mileage = mileage;
-		this.joinDate = joinDate;
-	}
-
-	public void setPersonalNumber(String personalNumber) {
-		this.personalNumber = personalNumber;
-	}
-
-	public UserVo() {
-	}
-	
-	public  UserVo(String id, String password) {
-		this.id = id;
-		this.password = password;
-	}
-
 	public Long getNo() {
 		return no;
 	}
@@ -117,23 +82,6 @@ public class UserVo {
 		this.phone = phone;
 	}
 
-
-	public String getGrade() {
-		return grade;
-	}
-
-	public void setGrade(String grade) {
-		this.grade = grade;
-	}
-
-	public int getMileage() {
-		return mileage;
-	}
-
-	public void setMileage(int mileage) {
-		this.mileage = mileage;
-	}
-
 	public Date getJoinDate() {
 		return joinDate;
 	}
@@ -142,12 +90,31 @@ public class UserVo {
 		this.joinDate = joinDate;
 	}
 
+	public UserVo(Long no, String id, String password, String name, String gender, String phone, Date joinDate,
+			String secret_key) {
+		super();
+		this.no = no;
+		this.id = id;
+		this.password = password;
+		this.name = name;
+		this.gender = gender;
+		this.phone = phone;
+		this.joinDate = joinDate;
+		this.secret_key = secret_key;
+	}
+
+	public String getSecret_key() {
+		return secret_key;
+	}
+
+	public void setSecret_key(String secret_key) {
+		this.secret_key = secret_key;
+	}
+
 	@Override
 	public String toString() {
 		return "UserVo [no=" + no + ", id=" + id + ", password=" + password + ", name=" + name + ", gender=" + gender
-				+ ", personalNumber=" + personalNumber + ", phone=" + phone + ", grade=" + grade + ", mileage="
-				+ mileage + ", joinDate=" + joinDate + "]";
+				+ ", phone=" + phone + ", joinDate=" + joinDate + ", secret_key=" + secret_key + "]";
 	}
-	
-	
+
 }
