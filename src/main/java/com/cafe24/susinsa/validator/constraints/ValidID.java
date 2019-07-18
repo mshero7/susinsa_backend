@@ -9,11 +9,11 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import com.cafe24.susinsa.validator.GenderValidator;
+import com.cafe24.susinsa.validator.IDValidator;
 
 @Retention(RUNTIME)
 @Target(FIELD)
-@Constraint(validatedBy=GenderValidator.class)
+@Constraint(validatedBy=IDValidator.class)
 public @interface ValidID {
 	String message() default "이메일 양식에 어긋납니다.";
 	Class<?>[] groups() default {};

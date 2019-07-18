@@ -4,6 +4,7 @@ import java.sql.Date;
 
 import javax.validation.constraints.Pattern;
 
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.cafe24.susinsa.validator.constraints.ValidGender;
@@ -24,15 +25,22 @@ public class UserVo {
 	@ValidPassword
 	private String password;
 
-	@NotEmpty(message = "이름은 필수입니다.")
+	@NotEmpty(message = "이름을 입력하세요.")
+	@Length(min=2, max=8)
 	private String name;
 
 	@ValidGender
 	private String gender;
-
+	
+	@NotEmpty(message = "핸드폰번호를 입력하세요.")
 	private String phone;
+	
 	private Date joinDate;
-	private String secret_key;
+	private String enc_key;
+	
+	public UserVo() {
+		
+	}
 	
 	public Long getNo() {
 		return no;
@@ -91,7 +99,7 @@ public class UserVo {
 	}
 
 	public UserVo(Long no, String id, String password, String name, String gender, String phone, Date joinDate,
-			String secret_key) {
+			String enc_key) {
 		super();
 		this.no = no;
 		this.id = id;
@@ -100,21 +108,21 @@ public class UserVo {
 		this.gender = gender;
 		this.phone = phone;
 		this.joinDate = joinDate;
-		this.secret_key = secret_key;
+		this.enc_key = enc_key;
 	}
 
-	public String getSecret_key() {
-		return secret_key;
+	public String getenc_key() {
+		return enc_key;
 	}
 
-	public void setSecret_key(String secret_key) {
-		this.secret_key = secret_key;
+	public void setenc_key(String enc_key) {
+		this.enc_key = enc_key;
 	}
 
 	@Override
 	public String toString() {
 		return "UserVo [no=" + no + ", id=" + id + ", password=" + password + ", name=" + name + ", gender=" + gender
-				+ ", phone=" + phone + ", joinDate=" + joinDate + ", secret_key=" + secret_key + "]";
+				+ ", phone=" + phone + ", joinDate=" + joinDate + ", enc_key=" + enc_key + "]";
 	}
 
 }

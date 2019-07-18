@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="user">
-	<select id="existUserCheck" parameterType="uservo" resultType="Integer">
+	<select id="existUserCheck" parameterType="uservo" resultType="int">
 		<![CDATA[
 			select count(*) from CLIENT where 
 			client_name = AES_ENCRYPT(#{name}, SHA2(#{enc_key}, 512))
@@ -11,5 +11,23 @@
 		]]>
 	</select>
 	
+	<select id="existId" parameterType="uservo" resultType="int">
+		<![CDATA[
+			select count(*) from CLIENT where 
+			client_id = AES_ENCRYPT(#{id}, SHA2(#{enc_key}, 512));
+		]]>
+	</select>
 	
+	<insert id="join" parameterType="uservo">
+		<![CDATA[
+			insert into CLIENT values(
+				null,
+			    AES_ENCRYPT(#{id}, SHA2(#{enc_key}, 512)),
+			    AES_ENCRYPT(#{password}, SHA2(#{enc_key}, 512)),
+			    AES_ENCRYPT(#{name}, SHA2(#{enc_key}, 512)),
+			    'M',
+			    AES_ENCRYPT(#{phone}, SHA2(#{enc_key}, 512)),
+			    now());
+		]]>
+	</insert>
 </mapper>

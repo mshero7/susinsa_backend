@@ -4,8 +4,6 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -33,6 +31,10 @@ import com.google.gson.Gson;
 @ContextConfiguration(classes={AppConfig.class, WebConfig.class})
 @WebAppConfiguration
 public class UserControllerTest {
+	// SALT
+	private static final String CORRECT_ENC_KEY = "aa";
+	private static final String WRONG_ENC_KEY = "bb";
+	
 	/*
 	 * 1. 이미 가입한 회원인지 조사
 	 * 2. 이미 가입된 아이디인지 조사
@@ -65,49 +67,83 @@ public class UserControllerTest {
 		ResultActions resultActions; 
 		
 		resultActions = mockMvc
-				.perform(get("/api/user/check/Joinable")
+				.perform(get("/api/user/join/check")
 				.param("name", "문상수1")
 				.param("phone", "010-2526-7336")
-				.param("enc_key", "aa")
+				.param("enc_key", CORRECT_ENC_KEY)
 				.contentType(MediaType.APPLICATION_JSON));
 		
 		// 무조건 OK가 나고 데이터베이스에 갔다와야 알수있는거아닐까
 		resultActions.andExpect(status().isOk())
-		.andDo(print())
+//		.andDo(print())
 		.andExpect(jsonPath("$.result", is("success")))
 		.andExpect(jsonPath("$.data", is(true)));
 	}
 	
-	// 2. 이미 가입된 아이디인지 조사
-	// 이미 다른 고객이 사용중인 아이디인지 조회한다.
-	// 가입하지 않은 아이디로 테스트 해보고 true가 나온다면 사용이 가능한것이다.
-//	@Test
-//	public void testUserCheckId() throws Exception {
-//		ResultActions resultActions = mockMvc
-//				.perform(get("/api/user/check/Id","test@naver.com").contentType(MediaType.APPLICATION_JSON));
-//		
-//		resultActions.andExpect(status().isOk())
+//	 2. 이미 가입된 아이디인지 조사
+//	 이미 다른 고객이 사용중인 아이디인지 조회한다.
+//	 가입하지 않은 아이디로 테스트 해보고 false가 나온다면 사용이 가능한것이다.
+	@Test
+	public void testUserCheckId() throws Exception {
+		ResultActions resultActions;
+		
+		resultActions = mockMvc
+				.perform(get("/api/user/join/check/id")
+				.param("id", "test@naver.com")
+				.param("enc_key", CORRECT_ENC_KEY)
+				.contentType(MediaType.APPLICATION_JSON));
+		
+		resultActions.andExpect(status().isOk())
 //		.andDo(print())
-//		.andExpect(jsonPath("$.result", is("success")))
-//		.andExpect(jsonPath("$.data", is(true)));
-//	}
+		.andExpect(jsonPath("$.result", is("success")))
+		.andExpect(jsonPath("$.data", is(false)));
+	}
 	
-//	// 3. 회원가입
-//	@Test
-//	public void testUserJoin() throws Exception {
-//		UserVo vo = new UserVo(); 
-//		vo.setId("test@naver.com"); 
-//		vo.setPassword("test12!@");
+	// 3. 회원가입
+	@Test
+	public void testUserJoin() throws Exception {
+		ResultActions resultActions;
+		UserVo vo = new UserVo();
+		
+		// Normal User's Join Data
+
+		resultActions = mockMvc
+			.perform(post("/api/user/join")
+				.param("id", "test@naver.com")
+				.param("password", "Rmeofhek12!@")
+				.param("name", "문상수")
+				.param("gender", "M")
+				.param("phone", "010-2526-7336")
+				.param("date", "")
+				.param("enc_key", CORRECT_ENC_KEY)
+			.contentType(MediaType.APPLICATION_JSON));
+			
+		resultActions
+			.andExpect(status().isOk())
+			.andDo(print())
+			.andExpect(jsonPath("$.result", is("success")))
+			.andExpect(jsonPath("$.data", is(true)));;
+		
+			
+//		// 2. 아이디를 이메일양식에 맞추지 않았을때
+//		vo.setNo(2L);
+//		vo.setId("test1234__naver.com");
+//		vo.setPassword("dkfrhf12!@");
+//		vo.setName("문상수");
+//		vo.setGender("M");
+//		vo.setPhone("010-2526-7336");
+//		vo.setJoinDate(null);
+//		vo.setenc_key(CORRECT_ENC_KEY);
 //		
-//		ResultActions resultActions = mockMvc
-//				.perform(post("/api/user/join").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
-//		
+//		resultActions = mockMvc
+//				.perform(post("/api/user/join")
+//						.contentType(MediaType.APPLICATION_JSON)
+//						.content(new Gson().toJson(vo)));
+//				
 //		resultActions.andExpect(status().isOk())
-//		.andDo(print())
-//		.andExpect(jsonPath("$.result", is("success")))
-//		.andExpect(jsonPath("$.data[0].id", is("test@naver.com")))
-//		.andExpect(jsonPath("$.data[0].id", is("test12!@")));
-//	}
+//			.andDo(print())
+//			.andExpect(status().isBadRequest());
+	}
 	
 //	// 4. 로그인
 //	@Test

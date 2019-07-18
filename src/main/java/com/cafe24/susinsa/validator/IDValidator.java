@@ -8,7 +8,7 @@ import javax.validation.ConstraintValidatorContext;
 import com.cafe24.susinsa.validator.constraints.ValidID;
 
 public class IDValidator implements ConstraintValidator<ValidID, String> {
-	private Pattern pattern = Pattern.compile("\"^[\\\\w-_\\\\.+]*[\\\\w-_\\\\.]\\\\@([\\\\w]+\\\\.)+[\\\\w]+[\\\\w]$\""); 
+	private Pattern pattern = Pattern.compile("^(.+)@(.+)$"); 
 
 	@Override
 	public void initialize(ValidID constraintAnnotation) {

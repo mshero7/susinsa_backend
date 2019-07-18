@@ -1,14 +1,18 @@
 package com.cafe24.susinsa.dto;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class UserCheckDTO {
+	@NotEmpty(message = "이름을 입력하세요.")
 	public String name;
+	@NotEmpty(message = "핸드폰번호를 입력하세요.")
 	public String phone;
 	public String enc_key;
 	
 	public UserCheckDTO() {
 		
 	}
-
+	
 	public UserCheckDTO(String name, String phone, String enc_key) {
 		super();
 		this.name = name;
