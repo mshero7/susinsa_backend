@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="category">
+	<!-- 카테고리 추가 -->
+	<update id="insert" statementType="CALLABLE" parameterType="categoryvo">
+	<![CDATA[	
+		{ call INSERT_CATEGORY(
+			#{pre_category_name, mode=IN, jdbcType=VARCHAR, javaType=String},
+			#{new_category_name, mode=IN, jdbcType=VARCHAR, javaType=String},
+			#{result, mode=OUT, jdbcType=INTEGER, javaType=Integer} 
+			)
+		 }
+	 ]]>
+	</update>
+	
+	<!-- 카테고리 이름 수정 -->
+	<update id="update" parameterType="categoryvo">
+	<![CDATA[	
+		update CATEGORY SET category_name = #{category_name} where category_no = #{category_no};
+	 ]]>
+	</update>
+	
+	<!-- 카테고리 자식 삭제 -->
+	<update id="deleteChild" statementType="CALLABLE" parameterType="categoryvo">
+	<![CDATA[	
+		{ call DELETE_CATEGORY(
+			#{category_name, mode=IN, jdbcType=VARCHAR, javaType=String},
+			#{result, mode=OUT, jdbcType=INTEGER, javaType=Integer}	)
+		 }
+	 ]]>
+	</update>
+</mapper>
