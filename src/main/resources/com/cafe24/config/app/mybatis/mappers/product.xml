@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="product">
+
+	<insert id="add" parameterType="java.util.HashMap">
+		insert into PRODUCT(product_no, product_name, product_price, product_sale, product_date, product_weight, product_brand_no, product_category_no) 
+		values 
+		(null, #{productVo.product_name}, #{productVo.product_price}, #{productVo.product_sale}, now(),#{productVo.product_weight}, #{productVo.product_brand_no}, #{productVo.product_category_no});
+		
+		insert into IMAGE(image_no, image_upload_name, image_date, image_order, image_product_no)
+		values
+		<foreach collection="list_image" item="image" separator="," close=";">
+			(null, #{image.image_upload_name}, now(), #{image.image_order}, #{image.image_product_no})
+		</foreach>
+
+		insert into OPT(opt_no, opt_name, opt_product_no) 
+		values
+		<foreach collection="list_opt" item="optvo" separator="," close=";">
+			(null, #{optvo.opt_name}, #{optvo.opt_product_no})
+		</foreach>
+		
+		insert into OPT_DETAIL(opt_detail_no, opt_detail_name, opt_detail_opt_no) 
+		values
+		<foreach collection="list_opt_detail" item="optvo" separator="," close=";">
+			(null, #{optvo.opt_detail_name}, #{optvo.opt_detail_opt_no})
+		</foreach>
+		
+		insert into OPT_FULL_DETAIL(opt_full_detail_no, opt_full_detail_name, opt_full_detail_display, opt_full_detail_sales, opt_full_detail_extra, opt_full_detail_stock, opt_full_detail_product_no) 
+		values
+		<foreach collection="list_opt_full_detail" item="optvo" separator="," close=";">
+			(null, 
+			 #{optvo.opt_full_detail_name},
+			 #{optvo.opt_full_detail_display},
+			 #{optvo.opt_full_detail_sales},
+			 #{optvo.opt_full_detail_extra},
+			 #{optvo.opt_full_detail_stock},
+			 #{optvo.opt_full_detail_product_no})
+		</foreach>
+	 </insert>
+	 
+	 <delete id="delete" parameterType="long">
+	 	delete from PRODUCT where product_no = #{product_no}
+	 </delete>
+	 
+	 
+	<!-- 전체상품 리스트 보기 -->
+	<!-- 옵션을 제외한 정보들을 가져옴 -->
+	<select id="getList" resultType="productvo">
+		<![CDATA[
+			select a.product_name, a.product_price, b.image_upload_name, c.category_name, d.brand_name
+				from PRODUCT a, IMAGE b, CATEGORY c, BRAND d
+				where a.product_no = b.image_product_no
+				and a.category_no = c.category_no
+				and a.brand_no = d.brand_no;
+		]]>
+	</select>
+	
+	<!-- 옵션을 포함한 구체적인 정보들을 가져옴 -->
+	<select id="getProduct" resultType="productvo" parameterType="int">
+		<![CDATA[
+			select a.product_name, a.product_price, b.image_upload_name, c.category_name, d.brand_name, e.opt_details_name, e.opt_details_extra, opt_details_stock
+				from PRODUCT a, IMAGE b, CATEGORY c, BRAND d, OPT_DETAILS e
+				where a.product_no = #{product_no} 
+				a.product_no = b.image_product_no
+				and a.category_no = c.category_no
+				and a.brand_no = d.brand_no;
+		]]>
+	</select>
+	
+	<!-- 카테고리 -->
+	<select id="getProductByCategory" resultType="productvo" parameterType="int">
+		<![CDATA[
+			select product_name, product_price, product_sale, product_date, product_weight, brnad_no, category_no from PRODUCT
+			where category_no = #{category_no};
+		]]>
+	</select>
+	
+	<select id="getProductByBrandNo" resultType="productvo" parameterType="int">
+		<![CDATA[
+			select product_name, product_price, product_sale, product_date, product_weight, brnad_no, category_no from PRODUCT
+			where brand_no = #{brand_no};
+		]]>
+	</select>
+</mapper>

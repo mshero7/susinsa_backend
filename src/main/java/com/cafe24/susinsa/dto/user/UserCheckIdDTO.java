@@ -1,4 +1,4 @@
-package com.cafe24.susinsa.dto;
+package com.cafe24.susinsa.dto.user;
 
 import org.hibernate.validator.constraints.NotEmpty;
 

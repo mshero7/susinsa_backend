@@ -2,9 +2,16 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<typeAlias alias="uservo" type="com.cafe24.susinsa.vo.UserVo" />
+		<typeAlias alias="uservo" type="com.cafe24.susinsa.vo.UserVo"/>
+		<typeAlias alias="categoryvo" type="com.cafe24.susinsa.vo.CategoryVo"/>
+		<typeAlias alias="productvo" type="com.cafe24.susinsa.vo.ProductVo"/>
+		<typeAlias alias="shippingvo" type="com.cafe24.susinsa.vo.ShippingVo"/>
+		<typeAlias alias="optvo" type="com.cafe24.susinsa.vo.OptVo"/>
     </typeAliases>	
 	<mappers>
 		<mapper resource="com/cafe24/config/app/mybatis/mappers/user.xml" />
+		<mapper resource="com/cafe24/config/app/mybatis/mappers/category.xml"/>
+		<mapper resource="com/cafe24/config/app/mybatis/mappers/product.xml"/>
+		<mapper resource="com/cafe24/config/app/mybatis/mappers/shipping.xml"/>
 	</mappers>
 </configuration>
