@@ -5,13 +5,18 @@
 		<typeAlias alias="uservo" type="com.cafe24.susinsa.vo.UserVo"/>
 		<typeAlias alias="categoryvo" type="com.cafe24.susinsa.vo.CategoryVo"/>
 		<typeAlias alias="productvo" type="com.cafe24.susinsa.vo.ProductVo"/>
-		<typeAlias alias="shippingvo" type="com.cafe24.susinsa.vo.ShippingVo"/>
+		<typeAlias alias="productdto" type="com.cafe24.susinsa.dto.product.ProductDTO"/>
 		<typeAlias alias="optvo" type="com.cafe24.susinsa.vo.OptVo"/>
+		<typeAlias alias="optdetailvo" type="com.cafe24.susinsa.vo.OptDetailVo"/>
+		<typeAlias alias="optfulldetailvo" type="com.cafe24.susinsa.vo.OptFullDetailVo"/>
+		<typeAlias alias="imagevo" type="com.cafe24.susinsa.vo.ImageVo"/>
+		<typeAlias alias="shippingvo" type="com.cafe24.susinsa.vo.ShippingVo"/>
     </typeAliases>	
 	<mappers>
 		<mapper resource="com/cafe24/config/app/mybatis/mappers/user.xml" />
 		<mapper resource="com/cafe24/config/app/mybatis/mappers/category.xml"/>
 		<mapper resource="com/cafe24/config/app/mybatis/mappers/product.xml"/>
 		<mapper resource="com/cafe24/config/app/mybatis/mappers/shipping.xml"/>
+		<mapper resource="com/cafe24/config/app/mybatis/mappers/brand.xml"/>
 	</mappers>
 </configuration>
