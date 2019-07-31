@@ -3,6 +3,7 @@ package com.cafe24.susinsa.controller.api;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -28,12 +29,12 @@ import com.cafe24.susinsa.service.CategoryService;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={AppConfig.class, WebConfig.class})
 @WebAppConfiguration
-public class CategoryControllerTest {
+public class AdminBrandControllerTest {
 
 	/*
-	 * 1. Category 등록 -> case (A B C)
-	 * 2. Category 수정
-	 * 3. Category 삭제
+	 * 1. 브랜드 등록
+	 * 2. 브랜드 수정
+	 * 3. 브랜드 삭제
 	 * */
 	
 	private MockMvc mockMvc;
@@ -71,7 +72,7 @@ public class CategoryControllerTest {
 		// '최상위 카테고리'
 		resultActions =
 				mockMvc
-				.perform(get("/api/category/add")
+				.perform(post("/api/category/add")
 				.param("pre_category_name", "최상위 카테고리2")
 				.param("new_category_name", "남성의류")
 				.contentType(MediaType.APPLICATION_JSON));

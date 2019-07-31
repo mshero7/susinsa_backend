@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="shipping">
+	<insert id="add" parameterType="shippingvo">
+		<![CDATA[
+			insert into BRAND values(
+			null,
+			#{brand_name},
+			#{brand_division});
+		]]>
+	</insert>
+
+	<update id="modify" parameterType="shippingvo">
+		<![CDATA[
+			update BRAND 
+			SET 
+			brand_name = #{brand_name},
+			brand_division = #{brand_division}),
+			where
+			brand_no = #{brand_no};
+		]]>
+	</update>
+	
+	<delete id="delete" parameterType="shippingvo">
+		<![CDATA[
+			delete from BRAND where brand_no = #{brand_no}; 
+		]]>
+	</delete>
+
+
+</mapper>
