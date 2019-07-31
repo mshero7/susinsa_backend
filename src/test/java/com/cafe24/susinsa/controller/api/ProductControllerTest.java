@@ -1,13 +1,10 @@
 package com.cafe24.susinsa.controller.api;
 
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertNotNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,12 +22,6 @@ import org.springframework.web.context.WebApplicationContext;
 import com.cafe24.susinsa.config.AppConfig;
 import com.cafe24.susinsa.config.WebConfig;
 import com.cafe24.susinsa.service.ProductService;
-import com.cafe24.susinsa.vo.ImageVo;
-import com.cafe24.susinsa.vo.OptDetailVo;
-import com.cafe24.susinsa.vo.OptFullDetailVo;
-import com.cafe24.susinsa.vo.OptVo;
-import com.cafe24.susinsa.vo.ProductVo;
-import com.google.gson.Gson;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={AppConfig.class, WebConfig.class})
@@ -66,4 +57,48 @@ public class ProductControllerTest {
 		assertNotNull(productService);
 	}
 	
+	@Test
+	public void testGetProduct() throws Exception {
+		ResultActions resultActions; 
+		
+		long product_no = 2L;
+		
+		resultActions = mockMvc
+				.perform(get("/api/product/get/{product_no}",product_no)
+				.contentType(MediaType.APPLICATION_JSON));
+		
+		resultActions.andExpect(status().isOk())
+//		.andDo(print())
+		.andExpect(jsonPath("$.result", is("success")))
+		.andExpect(jsonPath("$.data", is(true)));
+	}
+	
+	@Test
+	public void testGetProductList() throws Exception {
+		ResultActions resultActions; 
+		
+		resultActions = mockMvc
+				.perform(get("/api/product/get")
+				.contentType(MediaType.APPLICATION_JSON));
+		
+		resultActions.andExpect(status().isOk())
+//		.andDo(print())
+		.andExpect(jsonPath("$.result", is("success")))
+		.andExpect(jsonPath("$.data", is(true)));
+	}
+	
+	@Test
+	public void testGetProductListByBrandNo() throws Exception {
+		ResultActions resultActions; 
+		long product_brand_no = 2L;
+		
+		resultActions = mockMvc
+				.perform(get("/api/product/get/brand/{product_brand_no}",product_brand_no)
+				.contentType(MediaType.APPLICATION_JSON));
+		
+		resultActions.andExpect(status().isOk())
+//		.andDo(print())
+		.andExpect(jsonPath("$.result", is("success")))
+		.andExpect(jsonPath("$.data", is(true)));
+	}
 }

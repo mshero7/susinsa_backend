@@ -2,7 +2,51 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="product">
-
+	<resultMap id="productMap" type="productdto">
+		<id column="product_no" property="product_no"/>
+		<result property="product_no" column="product_no"/>
+		<result property="product_name" column="product_name"/>
+		<result property="product_price" column="product_price"/>
+		<result property="product_sale" column="product_sale"/>
+		<result property="product_date" column="product_date"/>
+		<result property="product_weight" column="product_weight"/>
+		<result property="product_brand_no" column="product_brand_no"/>
+		<result property="product_category_no" column="product_category_no"/>
+		<collection column="product_no" property="list_opt_full_detail"  select="list_opt_full_detail_by_product_no"/>
+		<collection column="product_no" property="list_image"  select="list_image_by_product_no"/>
+	</resultMap>
+		
+	<!-- 옵션을 포함한 구체적인 정보들을 가져옴 -->
+	<select id="getProduct" resultMap="productMap" parameterType="int">
+		<![CDATA[
+			select product_no, product_name, product_price from PRODUCT where product_no = #{product_no};
+		]]>
+	</select>
+	 
+	<!-- 전체상품 리스트 보기 -->
+	<!-- 옵션을 제외한 정보들을 가져옴 -->
+	<select id="getProductList" resultMap="productMap">
+		<![CDATA[
+			select product_name, product_price, product_sale, product_date, product_weight, product_brand_no, product_category_no from PRODUCT;
+		]]>
+	</select>
+	
+	<!-- 카테고리로 조회 -->
+	<select id="getProductListByCategoryNo" resultType="productvo" parameterType="long">
+		<![CDATA[
+			select product_name, product_price, product_sale, product_date, product_weight, product_brand_no, product_category_no from PRODUCT
+			where product_category_no = #{product_category_no};
+		]]>
+	</select>
+	
+	<!-- 브랜드로 조회 -->
+	<select id="getProductListByBrandNo" resultType="productvo" parameterType="long">
+		<![CDATA[
+			select product_name, product_price, product_sale, product_date, product_weight, product_brand_no, product_category_no from PRODUCT
+			where product_brand_no = #{product_brand_no};
+		]]>
+	</select>
+	
 	<insert id="add" parameterType="java.util.HashMap">
 		insert into PRODUCT(product_no, product_name, product_price, product_sale, product_date, product_weight, product_brand_no, product_category_no) 
 		values 
@@ -11,19 +55,27 @@
 		insert into IMAGE(image_no, image_upload_name, image_date, image_order, image_product_no)
 		values
 		<foreach collection="list_image" item="image" separator="," close=";">
-			(null, #{image.image_upload_name}, now(), #{image.image_order}, #{image.image_product_no})
+			(null, 
+			 #{image.image_upload_name}, 
+			 now(), 
+			 #{image.image_order}, 
+			 #{image.image_product_no})
 		</foreach>
 
 		insert into OPT(opt_no, opt_name, opt_product_no) 
 		values
 		<foreach collection="list_opt" item="optvo" separator="," close=";">
-			(null, #{optvo.opt_name}, #{optvo.opt_product_no})
+			(null, 
+			 #{optvo.opt_name},
+			 #{optvo.opt_product_no})
 		</foreach>
 		
 		insert into OPT_DETAIL(opt_detail_no, opt_detail_name, opt_detail_opt_no) 
 		values
 		<foreach collection="list_opt_detail" item="optvo" separator="," close=";">
-			(null, #{optvo.opt_detail_name}, #{optvo.opt_detail_opt_no})
+			(null, 
+			 #{optvo.opt_detail_name}, 
+			 #{optvo.opt_detail_opt_no})
 		</foreach>
 		
 		insert into OPT_FULL_DETAIL(opt_full_detail_no, opt_full_detail_name, opt_full_detail_display, opt_full_detail_sales, opt_full_detail_extra, opt_full_detail_stock, opt_full_detail_product_no) 
@@ -42,44 +94,20 @@
 	 <delete id="delete" parameterType="long">
 	 	delete from PRODUCT where product_no = #{product_no}
 	 </delete>
+	 	
+	 <select id="list_opt_full_detail_by_product_no" resultType="optfulldetailvo" parameterType="long">
+	 	<![CDATA[
+	 		select opt_full_detail_name 
+	 		from OPT_FULL_DETAIL 
+	 		where opt_full_detail_product_no = #{product_no} 
+	 	]]>
+	 </select>
 	 
-	 
-	<!-- 전체상품 리스트 보기 -->
-	<!-- 옵션을 제외한 정보들을 가져옴 -->
-	<select id="getList" resultType="productvo">
-		<![CDATA[
-			select a.product_name, a.product_price, b.image_upload_name, c.category_name, d.brand_name
-				from PRODUCT a, IMAGE b, CATEGORY c, BRAND d
-				where a.product_no = b.image_product_no
-				and a.category_no = c.category_no
-				and a.brand_no = d.brand_no;
-		]]>
-	</select>
-	
-	<!-- 옵션을 포함한 구체적인 정보들을 가져옴 -->
-	<select id="getProduct" resultType="productvo" parameterType="int">
-		<![CDATA[
-			select a.product_name, a.product_price, b.image_upload_name, c.category_name, d.brand_name, e.opt_details_name, e.opt_details_extra, opt_details_stock
-				from PRODUCT a, IMAGE b, CATEGORY c, BRAND d, OPT_DETAILS e
-				where a.product_no = #{product_no} 
-				a.product_no = b.image_product_no
-				and a.category_no = c.category_no
-				and a.brand_no = d.brand_no;
-		]]>
-	</select>
-	
-	<!-- 카테고리 -->
-	<select id="getProductByCategory" resultType="productvo" parameterType="int">
-		<![CDATA[
-			select product_name, product_price, product_sale, product_date, product_weight, brnad_no, category_no from PRODUCT
-			where category_no = #{category_no};
-		]]>
-	</select>
-	
-	<select id="getProductByBrandNo" resultType="productvo" parameterType="int">
-		<![CDATA[
-			select product_name, product_price, product_sale, product_date, product_weight, brnad_no, category_no from PRODUCT
-			where brand_no = #{brand_no};
-		]]>
-	</select>
+	 <select id="list_image_by_product_no" resultType="imagevo"  parameterType="long">
+	 	<![CDATA[
+	 		select image_upload_name, image_order 
+	 		from 
+	 		IMAGE where image_product_no = #{product_no} 
+	 	]]>
+	 </select>
 </mapper>

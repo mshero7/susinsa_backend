@@ -149,6 +149,7 @@ public class AdminProductControllerTest {
 	 * 3. 상품삭제 테스트
 	 * */
 	@Test
+	@Ignore
 	public void testDelete() throws Exception {
 		ResultActions resultActions;
 		

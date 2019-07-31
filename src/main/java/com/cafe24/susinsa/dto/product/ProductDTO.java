@@ -2,8 +2,8 @@ package com.cafe24.susinsa.dto.product;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
+import com.cafe24.susinsa.vo.ImageVo;
 import com.cafe24.susinsa.vo.OptDetailVo;
 import com.cafe24.susinsa.vo.OptFullDetailVo;
 import com.cafe24.susinsa.vo.OptVo;
@@ -29,24 +29,29 @@ public class ProductDTO {
 	private ArrayList<OptFullDetailVo> list_opt_full_detail;
 	
 	// IMAGE
-	private long image_no;
-	private String image_upload_name;
-	private Date image_date;
-	private long image_product_no;
+	private ArrayList<ImageVo> list_image;
+
+	public ProductDTO(Long product_no, String product_name, Integer product_price, Boolean product_sale,
+			Date product_date, Integer product_weight, Long product_brand_no, Long product_category_no,
+			ArrayList<OptVo> list_opt, ArrayList<OptDetailVo> list_opt_detail,
+			ArrayList<OptFullDetailVo> list_opt_full_detail, ArrayList<ImageVo> list_image) {
+		super();
+		this.product_no = product_no;
+		this.product_name = product_name;
+		this.product_price = product_price;
+		this.product_sale = product_sale;
+		this.product_date = product_date;
+		this.product_weight = product_weight;
+		this.product_brand_no = product_brand_no;
+		this.product_category_no = product_category_no;
+		this.list_opt = list_opt;
+		this.list_opt_detail = list_opt_detail;
+		this.list_opt_full_detail = list_opt_full_detail;
+		this.list_image = list_image;
+	}
 	
 	public ProductDTO() {
 		
-	}
-
-	@Override
-	public String toString() {
-		return "ProductDTO [product_no=" + product_no + ", product_name=" + product_name + ", product_price="
-				+ product_price + ", product_sale=" + product_sale + ", product_date=" + product_date
-				+ ", product_weight=" + product_weight + ", product_brand_no=" + product_brand_no
-				+ ", product_category_no=" + product_category_no + ", list_opt=" + list_opt + ", list_opt_detail="
-				+ list_opt_detail + ", list_opt_full_detail=" + list_opt_full_detail + ", image_no=" + image_no
-				+ ", image_upload_name=" + image_upload_name + ", image_date=" + image_date + ", image_product_no="
-				+ image_product_no + "]";
 	}
 
 	public Long getProduct_no() {
@@ -113,7 +118,6 @@ public class ProductDTO {
 		this.product_category_no = product_category_no;
 	}
 
-
 	public ArrayList<OptVo> getList_opt() {
 		return list_opt;
 	}
@@ -126,49 +130,37 @@ public class ProductDTO {
 		return list_opt_detail;
 	}
 
-	void setList_opt_detail(ArrayList<OptDetailVo> list_opt_detail) {
+	public void setList_opt_detail(ArrayList<OptDetailVo> list_opt_detail) {
 		this.list_opt_detail = list_opt_detail;
 	}
 
-	ArrayList<OptFullDetailVo> getList_opt_full_detail() {
+	public ArrayList<OptFullDetailVo> getList_opt_full_detail() {
 		return list_opt_full_detail;
 	}
 
-	void setList_opt_full_detail(ArrayList<OptFullDetailVo> list_opt_full_detail) {
+	public void setList_opt_full_detail(ArrayList<OptFullDetailVo> list_opt_full_detail) {
 		this.list_opt_full_detail = list_opt_full_detail;
 	}
 
-	public long getImage_no() {
-		return image_no;
+	public ArrayList<ImageVo> getList_image() {
+		return list_image;
 	}
 
-	public void setImage_no(long image_no) {
-		this.image_no = image_no;
+	public void setList_image(ArrayList<ImageVo> list_image) {
+		this.list_image = list_image;
 	}
 
-	public String getImage_upload_name() {
-		return image_upload_name;
+	@Override
+	public String toString() {
+		return "ProductDTO [product_no=" + product_no + ", product_name=" + product_name + ", product_price="
+				+ product_price + ", product_sale=" + product_sale + ", product_date=" + product_date
+				+ ", product_weight=" + product_weight + ", product_brand_no=" + product_brand_no
+				+ ", product_category_no=" + product_category_no + ", list_opt=" + list_opt + ", list_opt_detail="
+				+ list_opt_detail + ", list_opt_full_detail=" + list_opt_full_detail + ", list_image=" + list_image
+				+ "]";
 	}
-
-	public void setImage_upload_name(String image_upload_name) {
-		this.image_upload_name = image_upload_name;
-	}
-
-	public Date getImage_date() {
-		return image_date;
-	}
-
-	public void setImage_date(Date image_date) {
-		this.image_date = image_date;
-	}
-
-	public long getImage_product_no() {
-		return image_product_no;
-	}
-
-	public void setImage_product_no(long image_product_no) {
-		this.image_product_no = image_product_no;
-	}
+	
+	
 	
 	
 }

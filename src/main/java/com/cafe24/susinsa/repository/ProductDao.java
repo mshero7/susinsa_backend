@@ -32,5 +32,20 @@ public class ProductDao {
 		int result = sqlSession.delete(NAMESPACE + ".delete", product_no);
 		return result > 0;
 	}
+
+	public ProductDTO getProduct(long product_no) {
+		ProductDTO result = sqlSession.selectOne(NAMESPACE + ".getProduct", product_no);
+		return result;
+	}
+
+	public List<ProductDTO> getProductList() {
+		List<ProductDTO> result = sqlSession.selectList(NAMESPACE + ".getProductList");
+		return result;
+	}
+
+	public List<ProductDTO> getProductByBrandNo(long brand_no) {
+		List<ProductDTO> result = sqlSession.selectList(NAMESPACE + ".getProductListByBrandNo", brand_no);
+		return result;
+	}
 	
 }

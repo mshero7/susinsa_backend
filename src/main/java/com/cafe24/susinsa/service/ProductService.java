@@ -26,4 +26,16 @@ public class ProductService {
 	public boolean delete(long product_no) {
 		return dao.delete(product_no);
 	}
+
+	public ProductDTO getProduct(long product_no) {
+		return dao.getProduct(product_no);
+	}
+
+	public List<ProductDTO> getProductList() {
+		return dao.getProductList();
+	}
+
+	public List<ProductDTO> getProductByBrandNo(long brand_no) {
+		return dao.getProductByBrandNo(brand_no);
+	}
 }
