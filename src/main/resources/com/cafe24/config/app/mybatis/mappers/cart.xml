@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cart">
+	<insert id="add" parameterType="map">
+		<![CDATA[
+			insert into CART values(
+			null,
+			#{cart_count},
+			#{cart_client_no},
+			#{cart_opt_full_detail_no});
+		]]>
+	</insert>
+	
+	<update id="modify" parameterType="map">
+		<![CDATA[
+			update CART 
+			SET 
+			cart_count = #{cart_count}
+			where
+			cart_no = #{cart_no}
+		]]>
+	</update>
+	
+	<delete id="delete" parameterType="list">
+		<foreach collection="list" item="item">
+			delete from CART where cart_no = #{item};
+		</foreach> 
+	</delete>
+	
+	<select id="getlist" parameterType="long" resultType="cartdto">
+		select d.product_name, d.product_price, b.opt_full_detail_name, b.opt_full_detail_extra, a.cart_count
+		from
+		CART a, OPT_FULL_DETAIL b, CLIENT c, PRODUCT d
+		where a.cart_opt_full_detail_no = b.opt_full_detail_no
+		and b.opt_full_detail_product_no = d.product_no
+		and c.client_no = #{client_no};
+	</select>
+	
+	<select id="get_p_list" parameterType="list" resultType="cartdto">
+		select d.product_name, d.product_price, b.opt_full_detail_name, b.opt_full_detail_extra, a.cart_count
+		from
+		CART a, OPT_FULL_DETAIL b, CLIENT c, PRODUCT d
+		where a.cart_opt_full_detail_no = b.opt_full_detail_no
+		and b.opt_full_detail_product_no = d.product_no
+		and a.cart_no =
+		<foreach collection="list" item="item" separator="or" close=";">
+			#{item}
+		</foreach> 
+		
+	</select>
+</mapper>
