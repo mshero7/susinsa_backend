@@ -65,7 +65,7 @@
 **상품 수정**
 
 -  현재 API를 확인해보자면 상품에게 의존적인 IMAGE / OPT_FULL_DETAIL / OPT / OPT_DETAIL 부분들을 등록하는것에 깊이 생각하다보니 수정할때를 생각하지 못해 다시 코딩을 해야하는 불상사를 일으켰습니다.
--  ![1564932252143](C:\Users\user\AppData\Roaming\Typora\typora-user-images\1564932252143.png)
+-  ![1564932252143](https://github.com/mshero7/shoppingmall-docs/blob/master/images/%EC%9E%91%EC%97%85%EC%9D%BC%EC%A0%95%20-%20%EC%83%81%ED%92%88%ED%85%8C%ED%85%8C%EC%9D%B4%EB%B8%94.png?raw=true)
 
 
 
@@ -150,7 +150,7 @@
 
 ## 4. OrdersController
 
-![1564934912009](C:\Users\user\AppData\Roaming\Typora\typora-user-images\1564934912009.png)
+![1564934912009](https://github.com/mshero7/shoppingmall-docs/blob/master/images/%EC%9E%91%EC%97%85%EC%9D%BC%EC%A0%95%20-%20%EC%A3%BC%EB%AC%B8%20%ED%85%8C%EC%9D%B4%EB%B8%94.png?raw=true)
 
 ### 사용자
 
